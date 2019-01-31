@@ -21,6 +21,10 @@
 /simnet/carol/*.key
 /simnet/carol/data
 
+# testnet
+api/src/grpc/testnet/admin.macaroon
+api/src/grpc/testnet/tls.cert
+
 # environment
 /.env
 *.swp
