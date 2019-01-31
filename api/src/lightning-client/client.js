@@ -5,7 +5,7 @@ process.env.GRPC_SSL_CIPHER_SUITES = "HIGH+ECDSA";
 // Import dotenv to set environment variables.
 require("dotenv").load();
 
-// Read the macaroon as hex..
+// Read the macaroon as hex.
 m = fs.readFileSync(process.env.MACAROON_PATH);
 macaroon = m.toString("hex");
 
