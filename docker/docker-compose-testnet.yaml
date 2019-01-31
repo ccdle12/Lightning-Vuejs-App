@@ -1,0 +1,39 @@
+version: '2'
+services:
+  api:
+    container_name: api
+    build: ../api
+    command: "/api/scripts/dev.sh"
+    volumes:
+      - ../api:/api
+    ports:
+      - 3000:3000
+    environment:
+      - LND_NODE_IP=$NODES_TESTNET_IP
+      - LND_NODE_PORT=10009
+      - MACAROON_PATH=$TESTNET_MACAROON_PATH
+      - TLS_PATH=$TESTNET_TLS_PATH
+    networks:
+      default:
+        # TODO: (ccdle12) rename this to just APP_IP
+        ipv4_address: $APP_SIMNET_IP
+
+  front-end:
+    container_name: front-end
+    build: ../front-end/
+    volumes:
+      - ../front-end/app:/app
+    ports:
+      - 80:8080
+      - 5000:5000
+    networks:
+      default:
+        # TODO: (ccdle12) rename this to just FRONTEND_IP
+        ipv4_address: $FRONTEND_SIMNET_IP
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 174.20.0.0/24
