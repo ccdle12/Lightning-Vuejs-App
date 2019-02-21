@@ -1,11 +1,11 @@
 const express = require("express");
 const http = require("http");
-const app = express();
 const bodyParser = require("body-parser");
 const { ApolloServer } = require("apollo-server-express");
 const typeDefs = require("./graphql-schemas").typeDefs;
 const resolvers = require("./graphql-resolvers").resolvers;
 const { createServer } = require("http");
+const app = express();
 
 module.exports = function() {
   app.use(bodyParser.json());
@@ -15,7 +15,6 @@ module.exports = function() {
   const apolloServer = new ApolloServer({
     typeDefs,
     resolvers,
-    // context: ({ req }) => ({ req }),
     subscriptions: {
       onConnect: () => console.log("Connected to websocket"),
     },
@@ -28,6 +27,5 @@ module.exports = function() {
   
   // Return app this can be used in index.js and
   // in integration tests.
-  // return { httpServer, graphqlPath: apolloServer.graphqlPath };
   return { httpServer };
 };

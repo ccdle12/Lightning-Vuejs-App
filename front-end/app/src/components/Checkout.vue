@@ -20,40 +20,41 @@ export default {
   
   // |-------- Life Cycle Hooks --------|
   created: function() {
-      this.generateInvoice();
+    this.generateInvoice();
   },
 
   apollo: {
-  // Subscriptions
-  $subscribe: {
-    // When a tag is added
-    invoicePaid: {
-      query: gql`subscription invoicePaid($boltInvoice: String) {
-        invoicePaid(boltInvoice: $boltInvoice) {
-          paid
-          boltInvoice
-          value
-        }
-      }`,
-      // Reactive variables
-      variables () {
-        // This works just like regular queries
-        // and will re-subscribe with the right variables
-        // each time the values change
-        return {
-          boltInvoice: "asdfsdaF",
-        }
-      },
-      // Result hook
-      result (data) {
-        let resultStr = JSON.stringify(data);
-        let resultJSON = JSON.parse(resultStr);
-        console.log(resultJSON["data"]["invoicePaid"]["paid"]);
-        this.invoice = resultJSON["data"]["invoicePaid"]["paid"];
-      },
-    },
-  },
-},
+    // Subscriptions
+    $subscribe: {
+      // When a tag is added
+      invoicePaid: {
+        query: gql`subscription invoicePaid($boltInvoice: String) {
+          invoicePaid(boltInvoice: $boltInvoice) {
+            paid
+            boltInvoice
+            value
+          }
+        }`,
+
+        // Reactive variables
+        variables () {
+          // This works just like regular queries and will re-subscribe with the
+          //  right variables each time the values change.  
+          return {
+            boltInvoice: "asdfsdaF",
+          }
+        },
+
+        // Result hook
+        result (data) {
+          let resultStr = JSON.stringify(data);
+          let resultJSON = JSON.parse(resultStr);
+          console.log(resultJSON["data"]["invoicePaid"]["paid"]);
+          this.invoice = resultJSON["data"]["invoicePaid"]["paid"];
+        }, // result
+      }, // invoicePaid
+    }, // $subscribe
+}, // apollo
 
   // |-------- Methods --------|
   methods: {
@@ -85,8 +86,8 @@ export default {
           value
         }
       }`
+    },
   },
-},
 }
 
 </script>
